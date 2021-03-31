@@ -1,27 +1,38 @@
 var formEl = document.querySelector("#task-form"); 
 var tasksToDoEl = document.querySelector("#tasks-to-do"); 
 
-var createTaskHandler = function(event) { 
+var taskFormHandler = function(event) { 
+    event.preventDefault(); 
     var taskNameInput = document.querySelector("input[name='task-name']").value;
     var taskTypeInput = document.querySelector("select[name='task-type']").value;
-    event.preventDefault(); 
 
-    // create list item
-    var listItemEl = document.createElement("li"); 
-    listItemEl.className = "task-item";
-    
-    // create div to hold task info and add to list item
-    var taskInfoE1 = document.createElement("div");
-    // class name
-    taskInfoE1.className = "task-info";
-    // add html content to div
-    taskInfoE1.innerHTML = "<h3 class='task-name'>" + taskNameInput + "</h3><span class='task-type'>" + taskTypeInput + "</span>";
+    //package up data as an object
+    var taskDataObj = {
+        name: taskNameInput,
+        type: taskTypeInput
+    };
 
-    listItemEl.appendChild(taskInfoE1);
+    // send it as an argument to createTaskE1
+    creatTaskE1(taskDataObj)
+ }; 
 
-    // add entire list item to list
-    tasksToDoEl.appendChild(listItemEl);
+    var creatTaskE1 = function(taskDataObj) {
+         // create list item
+        var listItemEl = document.createElement("li"); 
+        listItemEl.className = "task-item";
+        
+        // create div to hold task info and add to list item
+        var taskInfoE1 = document.createElement("div");
+        // class name
+        taskInfoE1.className = "task-info";
 
-    }; 
+        // add html content to div
+        taskInfoE1.innerHTML = "<h3 class='task-name'>" + taskDataObj.name + "</h3><span class='task-type'>" + taskDataObj.type + "</span>";
+        listItemEl.appendChild(taskInfoE1);
 
-    formEl.addEventListener("submit", createTaskHandler);
+        // add entire list item to list
+        tasksToDoEl.appendChild(listItemEl);
+
+    }
+
+    formEl.addEventListener("submit", taskFormHandler);
